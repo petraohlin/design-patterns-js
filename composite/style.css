@@ -1,0 +1,46 @@
+
+body {
+    background: black;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+}
+
+canvas {
+	width: 45%;
+}
+
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"]:checked + label {
+    text-decoration: underline;
+}
+
+button {
+	font-family: "Courier New", Courier, monospace;
+	background-color: black;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+button:hover {
+    border: 2px solid white;
+}
+
+.add {
+	border: 2px solid palegreen;
+}
+
+.remove {
+	border: 2px solid lightsalmon;
+}
+
+.form {
+	width: 45%;
+	float: right;
+	padding-top: 10vh;
+    margin-left: 10%;
+}
+
