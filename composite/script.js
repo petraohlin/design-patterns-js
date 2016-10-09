@@ -1,8 +1,21 @@
-
 // Component
 
 class Shape 
 {
+	constructor(x, y, c) {
+		this.xPosition = x;
+		this.yPosition = y;
+		this.fillColor = c;
+	};
+
+	getPosition() {
+		return [this.xPosition, this.yPosition];
+	}
+
+	getColor() {
+		return this.fillColor;
+	}
+
 	draw(context) {};
 
 	add() {};
@@ -17,10 +30,14 @@ class Shape
 
 class Circle extends Shape
 {
+	constructor(x, y, c) {
+		super(x, y, c);
+	};
+
     draw(context) {
       	context.beginPath();
-      	context.arc(canvas.width / 2, canvas.height / 2, 20, 0, 2 * Math.PI, false);
-      	context.fillStyle = 'green';
+      	context.arc(super.getPosition()[0], super.getPosition()[1], 20, 0, 2 * Math.PI, false);
+      	context.fillStyle = super.getColor();
       	context.fill();
 	};
 
@@ -31,10 +48,15 @@ class Circle extends Shape
 
 class Rectangle extends Shape
 {
+
+	constructor(x, y, c) {
+		super(x, y, c);
+	};
+
     draw(context) {
       	context.beginPath();
-      	context.rect(100, 50, 40, 80);
-     	context.fillStyle = 'yellow';
+      	context.rect(super.getPosition()[0], super.getPosition()[1], 30, 40);
+     	context.fillStyle = super.getColor();
       	context.fill();
 	};
 
@@ -76,16 +98,36 @@ class ShapeGroup extends Shape
 }
 
 
+var colors = ['lightsalmon', 'hotpink', 'darkorange', 'lavender', 'plum', 'seagreen', 'yellowgreen', 'lightcyan', 'wheat'];
 const canvas = document.querySelector('#graphics');
 const context = canvas.getContext('2d');
 
 var shapes = new ShapeGroup();
 
-var circle = new Circle;
-var rectangle = new Rectangle;
+function addShape() {
+	var radios = document.getElementsByName('shape');
+	var xPosition = Math.random() * canvas.width;
+	var yPosition = Math.random() * canvas.height;
+	var fillColor = colors[Math.floor(Math.random() * colors.length)];
 
-shapes.add(circle);
-shapes.add(rectangle);
-shapes.draw(context);
+	for (var i = 0, length = radios.length; i < length; i++) {
+	    if (radios[i].checked) {
 
+	        if(radios[i].value == 'circle')
+	        	shapes.add(new Circle(xPosition, yPosition, fillColor));
+	        else 
+	        	shapes.add(new Rectangle(xPosition, yPosition, fillColor));
+
+	        shapes.draw(context);
+	        break;
+	    }
+	}
+
+}
+
+function removeShape() {
+	shapes.remove();
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	shapes.draw(context);
+}
 
