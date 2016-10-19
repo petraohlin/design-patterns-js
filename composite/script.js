@@ -1,33 +1,37 @@
-// Component
 
+var position = Symbol();
+var color = Symbol();
+
+
+// Component
 class Shape 
 {
 	constructor(x, y, c) {
-		this.xPosition = x;
-		this.yPosition = y;
-		this.fillColor = c;
+		this[position] = [x, y];
+		this[color] = c;
 	};
 
-	getPosition() {
-		return [this.xPosition, this.yPosition];
+	get position() {
+		return this[position];
 	}
 
-	getColor() {
-		return this.fillColor;
+	get color() {
+		return this[color];
 	}
 
-	draw(context) {};
+	// Functions used in Leaf classes 
+	// ------------------------------
+	// draw(context) {};
 
-	add() {};
-
-	remove() {};
-
-	getChild() {};
+	// Functions used in the Composite class
+	// -------------------------------------
+	// add() {};
+	// remove() {};
+	// getChild() {};
 }
 
 
 // Leaf classes 
-
 class Circle extends Shape
 {
 	constructor(x, y, c) {
@@ -36,14 +40,10 @@ class Circle extends Shape
 
     draw(context) {
       	context.beginPath();
-      	context.arc(super.getPosition()[0], super.getPosition()[1], 20, 0, 2 * Math.PI, false);
-      	context.fillStyle = super.getColor();
+      	context.arc(super.position[0], super.position[1], 20, 0, 2 * Math.PI, false);
+      	context.fillStyle = super.color;
       	context.fill();
 	};
-
-	add(shape) {};
-	remove() {};
-	getChild(index) {};
 }
 
 class Rectangle extends Shape
@@ -55,19 +55,13 @@ class Rectangle extends Shape
 
     draw(context) {
       	context.beginPath();
-      	context.rect(super.getPosition()[0], super.getPosition()[1], 30, 40);
-     	context.fillStyle = super.getColor();
+      	context.rect(super.position[0], super.position[1], 30, 40);
+     	context.fillStyle = super.color;
       	context.fill();
 	};
-
-
-	add(shape) {};
-	remove() {};
-	getChild(index) {};
 }
 
 // Composite class
-
 class ShapeGroup extends Shape
 {
 	constructor(context) {
@@ -97,11 +91,9 @@ class ShapeGroup extends Shape
 	};
 }
 
-
 var colors = ['lightsalmon', 'hotpink', 'darkorange', 'lavender', 'plum', 'seagreen', 'yellowgreen', 'lightcyan', 'wheat'];
 const canvas = document.querySelector('#graphics');
 const context = canvas.getContext('2d');
-
 var shapes = new ShapeGroup();
 
 function addShape() {
@@ -110,7 +102,7 @@ function addShape() {
 	var yPosition = Math.random() * canvas.height;
 	var fillColor = colors[Math.floor(Math.random() * colors.length)];
 
-	for (var i = 0, length = radios.length; i < length; i++) {
+	for (var i = 0; i < radios.length; i++) {
 	    if (radios[i].checked) {
 
 	        if(radios[i].value == 'circle')
