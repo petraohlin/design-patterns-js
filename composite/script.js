@@ -48,7 +48,6 @@ class Circle extends Shape
 
 class Rectangle extends Shape
 {
-
 	constructor(x, y, c) {
 		super(x, y, c);
 	};
@@ -91,11 +90,13 @@ class ShapeGroup extends Shape
 	};
 }
 
+// Program Variables
 var colors = ['lightsalmon', 'hotpink', 'darkorange', 'lavender', 'plum', 'seagreen', 'yellowgreen', 'lightcyan', 'wheat'];
 const canvas = document.querySelector('#graphics');
 const context = canvas.getContext('2d');
 var shapes = new ShapeGroup();
 
+// Program Functions
 function addShape() {
 	var radios = document.getElementsByName('shape');
 	var xPosition = Math.random() * canvas.width;
@@ -107,8 +108,15 @@ function addShape() {
 
 	        if(radios[i].value == 'circle')
 	        	shapes.add(new Circle(xPosition, yPosition, fillColor));
-	        else 
+	        else if(radios[i].value == 'rectangle')
 	        	shapes.add(new Rectangle(xPosition, yPosition, fillColor));
+	        else {
+	        	var tempShapes = new ShapeGroup();
+	        	tempShapes.add(new Circle(xPosition, yPosition+20, fillColor));
+	        	tempShapes.add(new Rectangle(xPosition+20, yPosition, fillColor));
+	        	shapes.add(tempShapes);
+	        }
+	        	
 
 	        shapes.draw(context);
 	        break;
